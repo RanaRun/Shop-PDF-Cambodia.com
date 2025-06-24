@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ហាងលក់ PDF របស់ខ្ញុំ</title>
+    <!-- Tailwind CSS CDN for easy styling and responsiveness -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6; /* Light gray background */
+            color: #333; /* Darker text for readability */
+        }
+        /* Custom styles for the modal overlay */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+        }
+        /* Hide scrollbar for a cleaner look, while allowing scrolling */
+        body::-webkit-scrollbar {
+            width: 0;  /* For Chrome, Safari, and Opera */
+            display: none; /* For Firefox and IE */
+        }
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Gradient text for headings (optional, for extra flair) */
+        .text-gradient {
+            background: linear-gradient(to right, #6366f1, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom animation for hero text */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInSlideUp {
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+        }
+        /* Custom animation for buttons */
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+            40% {
+                transform: scale3d(0.9, 0.9, 0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+            80% {
+                transform: scale3d(0.97, 0.97, 0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        .animate-bounceIn {
+            animation: bounceIn 0.7s forwards;
+            animation-delay: 0.5s; /* Add a slight delay after fadeInSlideUp */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 shadow-lg rounded-b-3xl">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-3xl font-extrabold mb-2 md:mb-0">ហាងលក់ PDF</h1>
+            <nav>
+                <ul class="flex space-x-6 text-lg">
+                    <!-- Removed Home, About Us, Contact links as per previous request -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section - Book Presentation -->
+    <section class="bg-gradient-to-br from-gray-700 to-gray-900 text-white p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 min-h-[500px] rounded-b-3xl shadow-xl mb-10">
+        <div class="flex-shrink-0 animate-fadeInSlideUp">
+            <!-- Image of the book "គម្ពីរ តម្រាអមរិន្ទ" -->
+            <img src="Book.jpg" alt="Image of គម្ពីរ តម្រាអមរិន្ទ" class="w-64 h-auto md:w-80 rounded-2xl shadow-2xl border-4 border-gray-600">
+        </div>
+        <div class="text-center md:text-left max-w-xl animate-fadeInSlideUp" style="animation-delay: 0.2s;">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight text-gradient">គម្ពីរ "តម្រាអមរិន្ទ"</h2>
+            <p class="text-xl md:text-2xl mb-4 font-light text-gray-200">
+                សម្ដែងពី <span class="font-medium text-white">ក្បួនសិល្ប៍</span> <span class="font-medium text-white">ក្បួនរតនមាលា</span> <span class="font-medium text-white">ក្បួនយ័ន្ត</span>
+            </p>
+            <p class="text-4xl md:text-5xl font-extrabold text-green-400 mb-8">$3.00</p>
+            <button id="hero-buy-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 animate-bounceIn">
+                ទិញឥឡូវនេះ
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white p-4 text-center mt-auto rounded-t-3xl">
+        <div class="container mx-auto">
+            <p>&copy; 2025 ហាងលក់ PDF របស់ខ្ញុំ។ រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+        </div>
+    </footer>
+
+    <!-- Product Details Modal (Kept for potential future use) -->
+    <div id="product-details-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden modal-overlay">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-lg relative transform scale-95 transition-transform duration-300 ease-out">
+            <!-- Close button -->
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold transition duration-200" id="close-modal-btn">&times;</button>
+
+            <img id="modal-product-image" src="" alt="Product Image" class="w-full h-64 object-cover rounded-xl mb-6 shadow-md">
+            <h3 id="modal-product-title" class="text-3xl font-bold text-gray-900 mb-3"></h3>
+            <p id="modal-product-description" class="text-gray-700 text-lg mb-6 leading-relaxed"></p>
+            <div class="flex justify-between items-center border-t pt-4 mt-4">
+                <span id="modal-product-price" class="text-4xl font-extrabold text-green-700"></span>
+                <!-- This button is no longer the primary trigger for QR, it's kept in case product details modal is re-enabled -->
+                <button id="buy-now-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300">
+                    ទិញឥឡូវនេះ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Payment Modal -->
+    <div id="qr-payment-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden modal-overlay">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-sm text-center relative transform scale-95 transition-transform duration-300 ease-out">
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold transition duration-200" id="close-qr-modal-btn">&times;</button>
+            <h3 class="text-3xl font-bold text-gray-800 mb-4">ស្កេនដើម្បីបង់ប្រាក់</h3>
+            <img id="qr-image" src="QR.jpg" alt="QR Code សម្រាប់បង់ប្រាក់" class="w-48 h-48 mx-auto my-6 rounded-xl shadow-md">
+            <p class="text-gray-700 text-lg mb-4">សូមស្កេន QR Code នេះដើម្បីបង់ប្រាក់។</p>
+            <p class="text-gray-600 text-base mb-6">បន្ទាប់ពីការបង់ប្រាក់សូមចុច "ខ្ញុំបានបង់ប្រាក់រួចហើយ"។</p>
+            <button id="download-qr-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-300 mb-4">
+                ទាញយក QR
+            </button>
+            <button id="confirm-payment-btn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-300">
+                ខ្ញុំបានបង់ប្រាក់រួចហើយ
+            </button>
+        </div>
+    </div>
+
+    <!-- Download Page Modal -->
+    <div id="download-page-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden modal-overlay">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-lg text-center relative transform scale-95 transition-transform duration-300 ease-out">
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold transition duration-200" id="close-download-modal-btn">&times;</button>
+            <h3 class="text-3xl font-bold text-green-600 mb-4">ការទិញបានជោគជ័យ!</h3>
+            <p class="text-gray-700 text-lg mb-6">សូមអរគុណសម្រាប់ការទិញរបស់អ្នក។ PDF របស់អ្នកនឹងត្រូវបានផ្ញើទៅកាន់អ្នកឆាប់ៗនេះ។</p>
+            <p id="download-message" class="text-gray-500 text-sm">សូមរងចាំ</p>
+        </div>
+    </div>
+
+    <script>
+        // Get references to existing DOM elements
+        const qrPaymentModal = document.getElementById('qr-payment-modal');
+        const closeQrModalBtn = document.getElementById('close-qr-modal-btn');
+        const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+        const heroBuyButton = document.getElementById('hero-buy-button'); // New reference for the hero section's buy button
+        const qrImage = document.getElementById('qr-image'); // Get reference to the QR image
+        const downloadQrBtn = document.getElementById('download-qr-btn'); // New reference for the download QR button
+
+        const downloadPageModal = document.getElementById('download-page-modal');
+        const closeDownloadModalBtn = document.getElementById('close-download-modal-btn');
+        const downloadMessage = document.getElementById('download-message');
+        
+        // Event listener for the "ទិញឥឡូវនេះ" button in the Hero Section
+        if (heroBuyButton) { // Check if the button exists
+            heroBuyButton.addEventListener('click', () => {
+                // Directly show the QR payment modal
+                qrPaymentModal.classList.remove('hidden');
+                qrPaymentModal.querySelector('div').classList.remove('scale-95');
+                qrPaymentModal.querySelector('div').classList.add('scale-100');
+            });
+        }
+
+        // Close QR payment modal when close button is clicked
+        closeQrModalBtn.addEventListener('click', () => {
+            qrPaymentModal.querySelector('div').classList.remove('scale-100');
+            qrPaymentModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                qrPaymentModal.classList.add('hidden');
+            }, 100);
+        });
+
+        // Close QR payment modal when clicking outside the modal content
+        qrPaymentModal.addEventListener('click', (event) => {
+            if (event.target === qrPaymentModal) {
+                closeQrModalBtn.click();
+            }
+        });
+
+        // Handle "ខ្ញុំបានបង់ប្រាក់រួចហើយ" button in QR Payment Modal - NOW OPENS GOOGLE FORM DIRECTLY
+        confirmPaymentBtn.addEventListener('click', () => {
+            // Close the QR modal
+            closeQrModalBtn.click();
+
+            // Construct the Google Form URL.
+            const googleFormUrl = "https://forms.gle/e4SKZT4ZQB2GQ8URA"; // UPDATED GOOGLE FORM URL
+
+            // Open Google Form in a new tab/window
+            window.open(googleFormUrl, '_blank');
+
+            // Show the download page modal (which now acts as a "thank you" page)
+            // This happens after opening the Google Form, assuming the user will continue there.
+            downloadPageModal.classList.remove('hidden');
+            downloadPageModal.querySelector('div').classList.remove('scale-95');
+            downloadPageModal.querySelector('div').classList.add('scale-100');
+            downloadMessage.textContent = 'សូមបន្តបំពេញឯកសារនៅក្នុង Google Form ដែលបានបើក។'; // Update message for clarity
+            downloadMessage.classList.add('text-blue-600'); // Add a blue color for this message
+        });
+
+        // Event listener for the "ទាញយក QR" button
+        if (downloadQrBtn) {
+            downloadQrBtn.addEventListener('click', () => {
+                const imageUrl = qrImage.src;
+                if (imageUrl) {
+                    const link = document.createElement('a');
+                    link.href = imageUrl;
+                    link.download = 'QR_Payment.jpg'; // Desired filename for the downloaded image
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link); // Clean up the temporary link
+                } else {
+                    console.error("QR image source not found.");
+                }
+            });
+        }
+
+        // Close download page modal when close button is clicked
+        closeDownloadModalBtn.addEventListener('click', () => {
+            downloadPageModal.querySelector('div').classList.remove('scale-100');
+            downloadPageModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                downloadPageModal.classList.add('hidden');
+            }, 100);
+        });
+
+        // Close download page modal when clicking outside the modal content
+        downloadPageModal.addEventListener('click', (event) => {
+            if (event.target === downloadPageModal) {
+                closeDownloadModalBtn.click();
+            }
+        });
+
+        // --- Existing (but now un-triggered) Product Details Modal Logic ---
+        const productDetailsModal = document.getElementById('product-details-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        closeModalBtn.addEventListener('click', () => {
+            productDetailsModal.querySelector('div').classList.remove('scale-100');
+            productDetailsModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                productDetailsModal.classList.add('hidden');
+            }, 100);
+        });
+
+        productDetailsModal.addEventListener('click', (event) => {
+            if (event.target === productDetailsModal) {
+                closeModalBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
